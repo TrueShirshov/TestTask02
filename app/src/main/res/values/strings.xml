@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">TestTask01</string>
+
+    <!--DIALOGS-->
+    <string name="dialog_error_title">Error</string>
+
+    <string name="dialog_error_text_unexpected">An unexpected error has occurred. Please try again or contact support if the problem persists.</string>
+    <string name="dialog_error_text_timeout">Connection timeout. Please try again later.</string>
+    <string name="dialog_error_text_no_connection">Could not connect to the server</string>
+
+    <!--BUTTONS-->
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancel</string>
+
 </resources>
