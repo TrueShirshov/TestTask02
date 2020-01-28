@@ -3,6 +3,8 @@ package org.shirshov.testtask.util.extension
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
+import android.content.res.TypedArray
+import android.util.AttributeSet
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 
@@ -33,4 +35,10 @@ fun Int.toColorRes(): Int {
 
 fun Int.toStringRes(vararg params: Any): String {
     return Ui.baseContext.getString(this, *params)
+}
+
+fun Context.initAttributes(attrs: AttributeSet?, styleable: IntArray, block: TypedArray.() -> Unit) {
+    val typedArray = obtainStyledAttributes(attrs, styleable)
+    block(typedArray)
+    typedArray.recycle()
 }

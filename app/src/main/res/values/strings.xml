@@ -12,4 +12,17 @@
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
 
+    <!--TOASTS-->
+    <string name="toast_reorder_disabled">Reorder disabled</string>
+
+    <!--HINTS-->
+    <string name="hint_query_albums">Search albums here…</string>
+
+    <!--EMPTY STATES-->
+    <string name="empty_state_albums">Use search to find awesome music</string>
+
+    <!--FORMATS-->
+    <string name="format_disc">Disc %s</string>
+    <string name="format_track">Track %s</string>
+
 </resources>

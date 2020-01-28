@@ -1,5 +1,6 @@
 package org.shirshov.testtask.ui.activity
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.shirshov.testtask.databinding.MainActivityBinding
@@ -20,12 +21,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         b = MainActivityBinding.inflate(layoutInflater)
         setContentView(b.root)
         setSupportActionBar(b.toolbar)
-        if (savedInstanceState == null) {
-            Navigate.to(SearchFragment(), null)
-        }
+        b.toolbar.setNavigationOnClickListener { onBackPressed() }
+        Navigate.to(SearchFragment(), null)
     }
 
+    // Restart from scratch when launched after process kill
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(Bundle())
+    }
+
+    fun showBack(show: Boolean) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(show)
+    }
 }

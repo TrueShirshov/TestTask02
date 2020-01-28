@@ -1,5 +1,6 @@
 package org.shirshov.testtask.ui.fragment
 
+import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,14 @@ import org.shirshov.testtask.util.extension.toStringRes
 
 abstract class BaseFragment : Fragment() {
 
+    // Avoiding IllegalStateException (impossible to access viewModels of detached fragments)
+    protected var onInitBlock: () -> Unit = {}
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        onInitBlock()
+        super.onCreate(savedInstanceState)
+    }
+
     protected fun setTitle(titleId: Int) = setTitle(titleId.toStringRes())
 
     protected fun setTitle(title: String) {
@@ -24,6 +33,8 @@ abstract class BaseFragment : Fragment() {
     fun showToast(stringId: Int) = Ui.showToast(stringId)
 
     fun showToast(text: String) = Ui.showToast(text)
+
+    fun showBack(show: Boolean) = mainActivity.showBack(show)
 
     fun <T : ViewDataBinding> setupLifecycle(observer: LifecycleObserver, binding: T): T {
         lifecycle.addObserver(observer)

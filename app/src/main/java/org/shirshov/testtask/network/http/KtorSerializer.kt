@@ -29,7 +29,7 @@ import org.shirshov.testtask.network.utils.defaultObjectMapper
  */
 class KtorSerializer internal constructor() {
 
-    private val acceptContentTypes: List<ContentType> = listOf(ContentType.Application.Json)
+    private val acceptContentTypes: List<ContentType> = listOf(ContentType.Application.Json, ContentType.Text.JavaScript)
 
     private fun write(data: Any, contentType: ContentType): OutgoingContent = TextContent(defaultObjectMapper.writeValueAsString(data), contentType)
 

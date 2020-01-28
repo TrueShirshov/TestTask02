@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="org.shirshov.testtask.ui.util.Format" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="org.shirshov.testtask.ui.fragment.album.SearchDetailsViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.fragment.album.SearchDetailsFragment">
+
+            <LinearLayout
+                android:id="@+id/containerAlbumDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgCover"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:adjustViewBounds="true"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/ic_album_placeholder" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textArtistName"
+                        style="@style/PrimaryDarkText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@{viewModel.album.artistName}"
+                        tools:text="Hordes Of Chaos" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textAlbumName"
+                        style="@style/AccentText.Big"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@{viewModel.album.albumName}"
+                        tools:text="Hordes Of Chaos" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textReleaseDate"
+                        style="@style/PrimaryDarkText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@{Format.dateAsYear(viewModel.album.releaseDate)}"
+                        tools:text="2009" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textGenre"
+                        style="@style/PrimaryDarkText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@{viewModel.album.genre}"
+                        tools:text="Thrash Metal" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <org.shirshov.testtask.ui.component.recycler.CoreRecycler
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/containerAlbumDetails"
+                tools:itemCount="5"
+                tools:listitem="@layout/song_cell" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+</layout>

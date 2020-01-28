@@ -43,7 +43,10 @@ abstract class BaseViewModel : ViewModel(), LifecycleObserver, CoroutineScope {
 
     protected fun post(block: suspend CoroutineScope.() -> Unit) = posts.add(block)
 
-    protected open fun cancel() = loads.cancel()
+    protected open fun cancel() {
+        loads.cancel()
+        loads = JobLauncher(loading, this)
+    }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun onResume() = reload()

@@ -36,7 +36,3 @@ class UnprocessedResponse<T>(private val response: Response<T>) {
 class Response<T>(val result: T?, val error: Exception?) {
     val success: Boolean get() = result != null && error == null
 }
-
-data class ResponseContainer<T>(
-    val data: T
-)

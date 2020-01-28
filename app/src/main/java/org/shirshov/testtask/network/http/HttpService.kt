@@ -4,9 +4,12 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
+import org.shirshov.testtask.network.utils.Path
 import org.shirshov.testtask.util.LogUtil
 
-class HttpService(val basePath: String) {
+class HttpService : BaseHttpService(Path.Server.API_ADDRESS)
+
+open class BaseHttpService(val basePath: String) {
 
     companion object {
         private const val TIMEOUT = 10_000
