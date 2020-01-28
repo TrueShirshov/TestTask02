@@ -80,7 +80,6 @@ class SearchFragment : BaseFragment() {
         disposable = subject.debounce(1, TimeUnit.SECONDS).subscribe { viewModel.search(it) }
 
         b.recycler.hideKeyboardOnScroll(activity, searchView)
-        searchView.setOnSearchAction { activity?.hideKeyboard(searchView) }
         searchView.innerTextView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 activity?.hideKeyboard(v)

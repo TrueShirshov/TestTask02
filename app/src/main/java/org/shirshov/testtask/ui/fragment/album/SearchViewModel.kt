@@ -11,13 +11,15 @@ class SearchViewModel(private val repository: AlbumsRepository) : BaseViewModel(
     val albums = mutableLiveData(listOf<AlbumItem>())
     var lastSearch = ""
         private set
+    var lastRequestFailed = false
 
     override fun loadData() {
         search(lastSearch)
     }
 
     fun search(text: String) {
-        if (text == lastSearch) return
+        if (text == lastSearch && !lastRequestFailed) return
+        lastRequestFailed = false
         cancel()
         lastSearch = text
         if (text.isBlank()) {
@@ -25,10 +27,13 @@ class SearchViewModel(private val repository: AlbumsRepository) : BaseViewModel(
             emptyState.postValue(true)
         } else {
             load {
-                repository.searchForAlbums(lastSearch).onDone {
+                repository.searchForAlbums(lastSearch).onDone({
                     albums.postValue(it.map { album -> AlbumItem(album) }
                         .sortedBy { albumItem -> albumItem.data.albumName }
                         .also { newData -> emptyState.postValue(newData.isNullOrEmpty()) })
+                }) {
+                    lastRequestFailed = true
+                    false
                 }
             }
         }
