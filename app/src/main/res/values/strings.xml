@@ -11,6 +11,8 @@
     <!--BUTTONS-->
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="btn_selectAll">Select All</string>
+    <string name="btn_selectNone">Select None</string>
 
     <!--TOASTS-->
     <string name="toast_reorder_disabled">Reorder disabled</string>
@@ -28,7 +30,13 @@
     <!--LABELS-->
     <string name="label_postponed">POSTPONED</string>
 
+    <!--HINTS-->
+    <string name="hint_close">Close</string>
+
     <!--DATE PATTERNS-->
     <string name="pattern_standard">MMM dd, YYYY \'at\' HH:mm</string>
+
+    <!--FILTER SCREEN-->
+    <string name="filter_title">Filter</string>
 
 </resources>

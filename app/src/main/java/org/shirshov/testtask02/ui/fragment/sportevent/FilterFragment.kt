@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -15,7 +16,6 @@ import org.shirshov.testtask02.ui.component.recycler.CoreAdapter
 import org.shirshov.testtask02.ui.component.recycler.CoreViewHolder
 import org.shirshov.testtask02.ui.fragment.BaseFragment
 import org.shirshov.testtask02.ui.holder.FilterItem
-import org.shirshov.testtask02.util.extension.inverse
 
 class FilterFragment : BaseFragment() {
 
@@ -29,11 +29,12 @@ class FilterFragment : BaseFragment() {
         initLoader(viewModel.loading, b.root as FrameLayout)
         setupLifecycle(viewModel, b)
         b.viewModel = viewModel
+        b.imgClose.setOnClickListener { (parentFragment as DialogFragment).dismiss() }
         adapter = object : CoreAdapter<FilterCellBinding, FilterItem>(viewModel.filter.value!!) {
 
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoreViewHolder<FilterCellBinding> {
                 val holder = CoreViewHolder(FilterCellBinding.inflate(inflater, parent, false), viewLifecycleOwner)
-                holder.onClick = { index -> adapter.items[index].data.active = adapter.items[index].checked.inverse() }
+                holder.onClick = viewModel::change
                 return holder
             }
 
