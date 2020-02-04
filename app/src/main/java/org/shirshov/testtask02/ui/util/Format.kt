@@ -1,6 +1,7 @@
 package org.shirshov.testtask02.ui.util
 
 import org.shirshov.testtask02.R
+import org.shirshov.testtask02.util.Time
 import org.shirshov.testtask02.util.extension.toStringRes
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -17,11 +18,14 @@ object Format {
     fun venue(venue: String?) = R.string.format_venue.toStringRes(venue ?: "")
 
     @JvmStatic
-    fun date(date: LocalDateTime?) = date?.format(DateTimeFormatter.ofPattern(R.string.pattern_standard.toStringRes())) ?: ""
+    fun date(date: LocalDateTime?) = date?.formatAsRegionalTime(R.string.pattern_standard.toStringRes()) ?: ""
 
     @JvmStatic
-    fun monthDay(date: LocalDateTime?) = date?.format(DateTimeFormatter.ofPattern("dd", locale))
+    fun monthDay(date: LocalDateTime?) = date?.formatAsRegionalTime("dd")
 
     @JvmStatic
-    fun weekDay(date: LocalDateTime?) = date?.format(DateTimeFormatter.ofPattern("EEE", locale))?.toUpperCase(locale)
+    fun weekDay(date: LocalDateTime?) = date?.formatAsRegionalTime("EEE")?.toUpperCase(locale)
+
+    private fun LocalDateTime.formatAsRegionalTime(pattern: String) = Time.convertUtcToRegionalTime(this).format(DateTimeFormatter.ofPattern(pattern, locale))
+
 }
