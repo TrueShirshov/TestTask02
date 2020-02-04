@@ -6,10 +6,9 @@
     tools:context=".HomeActivity">
 
     <item
-        android:id="@+id/actionSearch"
-        android:icon="@android:drawable/ic_menu_search"
+        android:id="@+id/actionFilter"
+        android:icon="@drawable/ic_filter"
         android:title=""
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always" />
 
 </menu>

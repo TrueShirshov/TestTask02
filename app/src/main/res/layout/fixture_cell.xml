@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="org.shirshov.testtask02.ui.util.Format" />
+
+        <import type="org.shirshov.testtask02.R" />
+
+        <variable
+            name="item"
+            type="org.shirshov.testtask02.ui.holder.FixtureItem" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="32dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textCompetitionName"
+                style="@style/BlackText.Big"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@{Format.competition(item.data.competitionName)}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/guidelineVertical"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Champions League" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textVenue"
+                style="@style/GreyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{Format.venue(item.data.venue)}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textCompetitionName"
+                tools:text="Stamford Bridge |" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textDate"
+                style="@style/GreyText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="@{Format.date(item.data.date)}"
+                android:textColor="@{safeUnbox(item.data.postponed) ? @android:color/holo_red_light : @android:color/darker_gray}"
+                app:layout_constraintLeft_toRightOf="@id/textVenue"
+                app:layout_constraintTop_toTopOf="@id/textVenue"
+                tools:text="Sep 12, 2017 at 20:00" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelPostponed"
+                style="@style/WhiteText.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:background="@android:color/holo_red_light"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="@string/label_postponed"
+                android:visibility="@{safeUnbox(item.data.postponed) ? View.VISIBLE : View.GONE}"
+                app:layout_constraintLeft_toRightOf="@id/guidelineVertical"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.4" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textHomeTeam"
+                style="@style/BlackText.Big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{item.data.homeTeam}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guidelineHorizontal"
+                tools:text="Chelsea FC" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textAwayTeam"
+                style="@style/BlackText.Big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@{item.data.awayTeam}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:text="Arsenal" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineVertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.7" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
+                app:layout_constraintTop_toBottomOf="@id/guidelineHorizontal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textMonthDay"
+                style="@style/BlackText.Giant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Format.monthDay(item.data.date)}"
+                app:layout_constraintBottom_toTopOf="@id/textWeekDay"
+                app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guidelineHorizontal"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="12" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textWeekDay"
+                style="@style/BlackText.Big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{Format.weekDay(item.data.date)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textMonthDay"
+                tools:text="TUE" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/darker_gray" />
+
+    </FrameLayout>
+</layout>

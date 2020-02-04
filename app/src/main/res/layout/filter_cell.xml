@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="org.shirshov.testtask02.ui.util.Format" />
+
+        <import type="org.shirshov.testtask02.R" />
+
+        <variable
+            name="item"
+            type="org.shirshov.testtask02.ui.holder.FilterItem" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textCompetitionName"
+                style="@style/BlackText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:text="@{Format.competition(item.data.competitionName)}"
+                tools:text="Champions League" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                app:imageResource="@{safeUnbox(item.checked) ? R.drawable.ic_checkbox_on : R.drawable.ic_checkbox_off}"
+                tools:srcCompat="@drawable/ic_checkbox_on" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/darker_gray" />
+
+    </FrameLayout>
+</layout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TestTask01</string>
+    <string name="app_name">TestTask02</string>
 
     <!--DIALOGS-->
     <string name="dialog_error_title">Error</string>
@@ -15,14 +15,20 @@
     <!--TOASTS-->
     <string name="toast_reorder_disabled">Reorder disabled</string>
 
-    <!--HINTS-->
-    <string name="hint_query_albums">Search albums here…</string>
-
     <!--EMPTY STATES-->
-    <string name="empty_state_albums">Use search to find awesome music</string>
+    <string name="empty_state_events">No data here, please change filters</string>
 
     <!--FORMATS-->
-    <string name="format_disc">Disc %s</string>
-    <string name="format_track">Track %s</string>
+    <string name="format_venue">%s |</string>
+
+    <!--VIEW PAGER TABS-->
+    <string name="view_pager_fixtures">Fixtures</string>
+    <string name="view_pager_results">Results</string>
+
+    <!--LABELS-->
+    <string name="label_postponed">POSTPONED</string>
+
+    <!--DATE PATTERNS-->
+    <string name="pattern_standard">MMM dd, YYYY \'at\' HH:mm</string>
 
 </resources>

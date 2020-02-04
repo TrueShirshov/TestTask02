@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="org.shirshov.testtask02.ui.util.Format" />
+
+        <import type="org.shirshov.testtask02.R" />
+
+        <variable
+            name="item"
+            type="org.shirshov.testtask02.ui.holder.ResultItem" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="32dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textCompetitionName"
+                style="@style/BlackText.Big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Format.competition(item.data.competitionName)}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Champions League" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textVenue"
+                style="@style/GreyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{Format.venue(item.data.venue)}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textCompetitionName"
+                tools:text="Stamford Bridge |" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textDate"
+                style="@style/GreyText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="@{Format.date(item.data.date)}"
+                app:layout_constraintLeft_toRightOf="@id/textVenue"
+                app:layout_constraintTop_toTopOf="@id/textVenue"
+                tools:text="Sep 12, 2017 at 20:00" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.4" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textHomeTeam"
+                style="@style/BlackText.Big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{item.data.homeTeam}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guidelineHorizontal"
+                tools:text="Chelsea FC" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textAwayTeam"
+                style="@style/BlackText.Big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@{item.data.awayTeam}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:text="Arsenal" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineVertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.7" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textHomeTeamScore"
+                style="@style/BlackText.Huge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Integer.toString(item.data.homeTeamScore)}"
+                android:textColor="@{safeUnbox(item.homeWin) ? @android:color/holo_blue_light : @android:color/black}"
+                app:layout_constraintBottom_toBottomOf="@id/textHomeTeam"
+                app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/textHomeTeam"
+                tools:text="2"
+                tools:textColor="@android:color/holo_red_light" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textAwayTeamScore"
+                style="@style/BlackText.Huge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Integer.toString(item.data.awayTeamScore)}"
+                android:textColor="@{safeUnbox(item.awayWin) ? @android:color/holo_blue_light : @android:color/black}"
+                app:layout_constraintBottom_toBottomOf="@id/textAwayTeam"
+                app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/textAwayTeam"
+                tools:text="0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/darker_gray" />
+
+    </FrameLayout>
+</layout>

@@ -17,17 +17,38 @@
         <item name="android:textColorPrimary">@color/colorPrimary</item>
     </style>
 
-    <style name="AccentText">
-        <item name="android:textColor">@color/colorAccent</item>
+    <style name="DialogAnimationBottom">
+        <item name="android:windowEnterAnimation">@anim/dialog_slide_up</item>
+        <item name="android:windowExitAnimation">@anim/dialog_slide_down</item>
     </style>
 
-    <style name="PrimaryDarkText">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+    <style name="BlackText">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="AccentText.Big">
+    <style name="GreyText">
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
+    <style name="WhiteText">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="WhiteText.Small">
+        <item name="android:textSize">11dp</item>
+    </style>
+
+    <style name="BlackText.Big">
         <item name="android:textSize">16dp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BlackText.Huge">
+        <item name="android:textSize">24dp</item>
+    </style>
+
+    <style name="BlackText.Giant">
+        <item name="android:textSize">40dp</item>
     </style>
 
 </resources>
