@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.shirshov.testtask02.R
+import org.shirshov.testtask02.databinding.HeaderDateCellBinding
 import org.shirshov.testtask02.databinding.ResultCellBinding
 import org.shirshov.testtask02.databinding.ResultsFragmentBinding
 import org.shirshov.testtask02.ui.component.recycler.CoreAdapter
@@ -24,7 +26,7 @@ class ResultsFragment : BaseFragment() {
     private val sharedModel: SportSharedViewModel by sharedViewModel()
     private val viewModel: ResultsViewModel by viewModel { parametersOf(sharedModel) }
     private lateinit var b: ResultsFragmentBinding
-    private lateinit var adapter: CoreAdapter<ResultCellBinding, ResultItem>
+    private lateinit var adapter: CoreAdapter<ViewDataBinding, ResultItem>
     private lateinit var layoutManager: LinearLayoutManager
     private var skipUpdate = true
 
@@ -33,14 +35,26 @@ class ResultsFragment : BaseFragment() {
         initLoader(viewModel.loading, b.root as FrameLayout)
         setupLifecycle(viewModel, b)
         b.viewModel = viewModel
-        adapter = object : CoreAdapter<ResultCellBinding, ResultItem>(viewModel.results.value!!) {
+        adapter = object : CoreAdapter<ViewDataBinding, ResultItem>(viewModel.results.value!!) {
 
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoreViewHolder<ResultCellBinding> {
-                return CoreViewHolder(ResultCellBinding.inflate(inflater, parent, false), viewLifecycleOwner)
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CoreViewHolder(
+                when (ResultItem.Type.values().getOrNull(viewType)) {
+                    ResultItem.Type.HEADER_DATE -> HeaderDateCellBinding.inflate(inflater, parent, false)
+                    ResultItem.Type.DATA -> ResultCellBinding.inflate(inflater, parent, false)
+                    null -> throw IllegalStateException()
+                }, viewLifecycleOwner
+            )
+
+            override fun bindViewHolder(holder: CoreViewHolder<ViewDataBinding>, item: ResultItem) {
+                when (item.type) {
+                    ResultItem.Type.HEADER_DATE -> (holder.b as HeaderDateCellBinding).item = item.headerDate
+                    ResultItem.Type.DATA -> (holder.b as ResultCellBinding).item = item
+                }
             }
 
-            override fun bindViewHolder(holder: CoreViewHolder<ResultCellBinding>, item: ResultItem) {
-                holder.b.item = item
+
+            override fun getItemViewType(position: Int): Int {
+                return adapter.items[position].type.ordinal
             }
 
         }
@@ -62,9 +76,12 @@ class ResultsFragment : BaseFragment() {
             return
         }
         if (!isVisible) return
-        val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+        var firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+        if (adapter.items.getOrNull(firstVisibleItemPosition)?.type == ResultItem.Type.HEADER_DATE) {
+            firstVisibleItemPosition++
+        }
         if (firstVisibleItemPosition >= 0 && firstVisibleItemPosition < adapter.items.size) {
-            setTitle(Format.dateAsMonth(adapter.items[firstVisibleItemPosition].data.date))
+            setTitle(Format.dateAsMonth(adapter.items[firstVisibleItemPosition].data?.date))
         } else {
             setTitle(R.string.app_name)
         }
