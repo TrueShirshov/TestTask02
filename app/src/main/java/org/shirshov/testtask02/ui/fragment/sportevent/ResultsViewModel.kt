@@ -10,13 +10,16 @@ import org.shirshov.testtask02.util.extension.mutableLiveData
 class ResultsViewModel(private val repository: SportEventRepository, private val sharedModel: SportSharedViewModel) : BaseViewModel() {
 
     val results = mutableLiveData(listOf<ResultItem>())
+    val emptyState = mutableLiveData(false)
     private val updateTriggerDisposable: Disposable = sharedModel.updateTrigger.subscribe { reload() }
 
     override fun loadData() {
         load {
             repository.results().onDone {
                 sharedModel.processNewCompetitions(it.map { fixture -> FilterRow(fixture.competitionId, fixture.competitionName, true) })
-                results.postValue(it.filter { result -> sharedModel.isActive(result.competitionId) }.map { result -> ResultItem(result) })
+                val filteredData = it.filter { result -> sharedModel.isActive(result.competitionId) }.map { result -> ResultItem(result) }
+                results.postValue(filteredData)
+                emptyState.postValue(filteredData.isNullOrEmpty())
             }
         }
     }
