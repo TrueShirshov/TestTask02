@@ -4,7 +4,6 @@ import io.reactivex.disposables.Disposable
 import org.shirshov.testtask02.network.repository.SportEventRepository
 import org.shirshov.testtask02.ui.fragment.BaseViewModel
 import org.shirshov.testtask02.ui.holder.ResultItem
-import org.shirshov.testtask02.ui.util.Format
 import org.shirshov.testtask02.util.extension.mutableLiveData
 
 class ResultsViewModel(private val repository: SportEventRepository, private val sharedModel: SportSharedViewModel) : BaseViewModel() {
@@ -26,15 +25,7 @@ class ResultsViewModel(private val repository: SportEventRepository, private val
 
     private fun addHeaders(filteredData: List<ResultItem>): List<ResultItem> {
         val result = mutableListOf<ResultItem>()
-        val uniqueHeaders = mutableListOf<String>()
-        for (item in filteredData) {
-            val date = Format.dateAsMonth(item.data?.date)
-            if (!uniqueHeaders.contains(date)) {
-                uniqueHeaders.add(date)
-                result.add(ResultItem.fromHeaderDate(date))
-            }
-            result.add(item)
-        }
+        addHeadersHelper(filteredData, result, { it.data?.date }, { ResultItem.fromHeaderDate(it) })
         return result
     }
 

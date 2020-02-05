@@ -6,6 +6,7 @@ import org.shirshov.testtask02.ui.fragment.BaseViewModel
 import org.shirshov.testtask02.ui.holder.FixtureItem
 import org.shirshov.testtask02.ui.util.Format
 import org.shirshov.testtask02.util.extension.mutableLiveData
+import org.threeten.bp.LocalDateTime
 
 class FixturesViewModel(private val repository: SportEventRepository, private val sharedModel: SportSharedViewModel) : BaseViewModel() {
 
@@ -26,20 +27,24 @@ class FixturesViewModel(private val repository: SportEventRepository, private va
 
     private fun addHeaders(filteredData: List<FixtureItem>): List<FixtureItem> {
         val result = mutableListOf<FixtureItem>()
-        val uniqueHeaders = mutableListOf<String>()
-        for (item in filteredData) {
-            val date = Format.dateAsMonth(item.data?.date)
-            if (!uniqueHeaders.contains(date)) {
-                uniqueHeaders.add(date)
-                result.add(FixtureItem.fromHeaderDate(date))
-            }
-            result.add(item)
-        }
+        addHeadersHelper(filteredData, result, { it.data?.date }, { FixtureItem.fromHeaderDate(it) })
         return result
     }
 
     override fun onCleared() {
         updateTriggerDisposable.dispose()
         super.onCleared()
+    }
+}
+
+fun <T> addHeadersHelper(filteredData: List<T>, resultItems: MutableList<T>, getDate: (T) -> LocalDateTime?, makeHeader: (String) -> T): Unit {
+    val uniqueHeaders = mutableListOf<String>()
+    for (item in filteredData) {
+        val date = Format.dateAsMonth(getDate(item))
+        if (!uniqueHeaders.contains(date)) {
+            uniqueHeaders.add(date)
+            resultItems.add(makeHeader(date))
+        }
+        resultItems.add(item)
     }
 }
