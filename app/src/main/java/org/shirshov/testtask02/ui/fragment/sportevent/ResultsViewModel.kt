@@ -1,7 +1,6 @@
 package org.shirshov.testtask02.ui.fragment.sportevent
 
 import io.reactivex.disposables.Disposable
-import org.shirshov.testtask02.data.FilterRow
 import org.shirshov.testtask02.network.repository.SportEventRepository
 import org.shirshov.testtask02.ui.fragment.BaseViewModel
 import org.shirshov.testtask02.ui.holder.ResultItem
@@ -16,7 +15,7 @@ class ResultsViewModel(private val repository: SportEventRepository, private val
     override fun loadData() {
         load {
             repository.results().onDone {
-                sharedModel.processNewCompetitions(it.map { fixture -> FilterRow(fixture.competitionId, fixture.competitionName, true) })
+                sharedModel.processNewCompetitions(it.map { fixture -> Pair(fixture.competitionId, fixture.competitionName) })
                 val filteredData = it.filter { result -> sharedModel.isActive(result.competitionId) }.map { result -> ResultItem(result) }
                 results.postValue(filteredData)
                 emptyState.postValue(filteredData.isNullOrEmpty())

@@ -9,10 +9,10 @@ class SportSharedViewModel() : ViewModel() {
     val competitions = hashMapOf<Long, FilterRow>()
     val updateTrigger = PublishSubject.create<Unit>()
 
-    fun processNewCompetitions(newCompetitions: List<FilterRow>) {
+    fun processNewCompetitions(newCompetitions: List<Pair<Long, String>>) {
         newCompetitions.forEach { newCompetition ->
-            if (!competitions.keys.contains(newCompetition.competitionId)) {
-                competitions[newCompetition.competitionId] = newCompetition
+            if (!competitions.keys.contains(newCompetition.first)) {
+                competitions[newCompetition.first] = FilterRow(newCompetition.first, newCompetition.second, true)
             }
         }
     }
