@@ -18,6 +18,9 @@ object Format {
     fun venue(venue: String?) = R.string.format_venue.toStringRes(venue ?: "")
 
     @JvmStatic
+    fun dateAsMonth(date: LocalDateTime?) = date?.formatAsRegionalTime("MMMM YYYY") ?: ""
+
+    @JvmStatic
     fun date(date: LocalDateTime?) = date?.formatAsRegionalTime(R.string.pattern_standard.toStringRes()) ?: ""
 
     @JvmStatic
